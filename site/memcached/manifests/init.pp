@@ -6,7 +6,7 @@ class memcached {
   
   file {'/etc/sysconfig/memcached':
     ensure => file,
-    soure => 'puppet:///modules/memcached/memcached',
+    source => 'puppet:///modules/memcached/memcached',
     owner   => 'root',
     group   => 'root',
     mode   => '755',
