@@ -11,8 +11,9 @@ class skeleton {
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
-    mode   => '755',
-    source  => "puppet:///site/skeleton/files/bashrc"
+    mode   => '644',
+    source  => "puppet:///modules/skeleton/files/bashrc"
+    #source  => "puppet:///modules/skeleton/bashrc"
   }
 
 }
