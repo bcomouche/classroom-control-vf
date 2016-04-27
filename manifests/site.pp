@@ -42,8 +42,19 @@ node default {
   # This is where you can declare classes for all nodes.
   # Example:
   #   class { 'my_class': }
-  notify { "Hello, my name is ${::hostname}": }
   
+  # Host Identification
+  if $::is_virtual {
+    $welcome_message = "${::hostname} is a virtual machine"
+  } else {
+    $welcome_message = "${::hostname} is NOT a virtual machine"
+  }
+  
+  notify { 'hostmessage':
+    message => $welcome_message,
+  }
+  
+  # Welcome Message
   exec { "cowsay 'Welcome to ${::fqdn}!' > /etc/motd":
     cwd     => "/etc/",
     creates => "/etc/motd",
