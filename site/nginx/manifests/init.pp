@@ -1,50 +1,48 @@
 class nginx {
   
+  $document_root = '/var/www'
+  $config_base_path = '/etc/nginx'
+  $package_name = 'nginx'
+  $service_name = 'nginx'
+  
+  # Resource Defaults
+  File {
+    ensure => file,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+  }
+  
   # Package
-  package { 'nginx':
+  package { $package_name:
     ensure => present,
   }
   
   # Docroot
-  file { '/var/www':
+  file { $document_root:
     ensure => directory,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
   }
   
   # Index Page
-  file { '/var/www/index.html':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
+  file { "${document_root}/index.html":
     source => "puppet:///modules/nginx/index.html",
   }
   
   # Configuration Files
-  file { '/etc/nginx/nginx.conf':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
+  file { "${config_base_path}/nginx.conf":
     source => "puppet:///modules/nginx/nginx.conf",
-    require => Package['nginx'],
-    notify  => Service['nginx'],
+    require => Package[$package_name],
+    notify  => Service[$service_name],
   }
   
-  file { '/etc/nginx/default.conf':
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
+  file { "${config_base_path}/default.conf":
     source => "puppet:///modules/nginx/default.conf",
-    require => Package['nginx'],
-    notify  => Service['nginx'],
+    require => Package[$package_name],
+    notify  => Service[$service_name],
   }
 
   # service
-  service { nginx:
+  service { $service_name:
     ensure => running,
     enable => true,
   }
