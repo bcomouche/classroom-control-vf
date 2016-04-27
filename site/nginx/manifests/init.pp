@@ -29,8 +29,8 @@ class nginx {
     group  => 'root',
     mode   => '0644',
     source => "puppet:///modules/nginx/nginx.conf",
-    require => 'nginx',
-    notify  => 'nginx',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
   
   file { '/etc/nginx/default.conf':
@@ -39,8 +39,8 @@ class nginx {
     group  => 'root',
     mode   => '0644',
     source => "puppet:///modules/nginx/default.conf",
-    require => 'nginx',
-    notify  => 'nginx',
+    require => Package['nginx'],
+    notify  => Service['nginx'],
   }
 
   # service
