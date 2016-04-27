@@ -1,7 +1,7 @@
 class nginx {
   
   # Package
-  package { 'nginx'
+  package { 'nginx':
     ensure => present,
   }
   
